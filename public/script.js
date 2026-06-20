@@ -81,6 +81,13 @@ async function authFetch(url, options = {}) {
   return res;
 }
 
+fileContent.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    saveBtn.click();
+  }
+});
+
 saveBtn.addEventListener('click', async () => {
   saveMsg.textContent = '';
   const name = fileName.value.trim();
@@ -121,21 +128,30 @@ async function loadFiles() {
 function renderFiles(files) {
   fileList.innerHTML = '';
   if (files.length === 0) {
-    fileList.innerHTML = '<li>No files yet.</li>';
+    fileList.innerHTML = '<p class="text-center text-[#667781] text-sm mt-6">No files yet. Save one below 👇</p>';
     return;
   }
-  files.forEach((file) => {
-    const li = document.createElement('li');
-    const date = new Date(file.createdAt).toLocaleString();
-    li.innerHTML = `
-      <span>${escapeHtml(file.name)} <small style="color:#94a3b8">(${date})</small></span>
-      <span class="file-actions">
-        <button class="view-btn" data-id="${file._id}">View</button>
-        <button class="delete-btn" data-id="${file._id}">Delete</button>
-      </span>
+  // reverse so oldest is on top, newest at bottom (like a chat thread)
+  [...files].reverse().forEach((file) => {
+    const time = new Date(file.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const bubble = document.createElement('div');
+    bubble.className = 'self-end max-w-[80%] bg-[#005c4b] text-white rounded-lg rounded-tr-sm px-3 py-2 shadow';
+    bubble.innerHTML = `
+      <div class="flex items-center gap-2 mb-1">
+        <span class="text-sm">📄</span>
+        <span class="font-medium text-sm truncate">${escapeHtml(file.name)}</span>
+      </div>
+      <div class="flex items-center justify-between gap-3 mt-1">
+        <span class="text-[11px] text-[#8696a0]">${time}</span>
+        <span class="flex gap-2">
+          <button class="view-btn text-[11px] bg-[#0b141a]/30 hover:bg-[#0b141a]/50 px-2 py-1 rounded-md" data-id="${file._id}">View</button>
+          <button class="delete-btn text-[11px] bg-red-900/40 hover:bg-red-900/60 px-2 py-1 rounded-md" data-id="${file._id}">Delete</button>
+        </span>
+      </div>
     `;
-    fileList.appendChild(li);
+    fileList.appendChild(bubble);
   });
+  fileList.parentElement.scrollTop = fileList.parentElement.scrollHeight;
 }
 
 fileList.addEventListener('click', async (e) => {
