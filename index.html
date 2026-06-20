@@ -1,15 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ultra Pro Typography Reel</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Cloud</title>
+<link rel="stylesheet" href="public/style.css" />
 </head>
 <body>
-<div class="reel">
-  <div id="text"></div>
-</div>
-<script src="script.js"></script>
+
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="screen">
+    <div class="card">
+      <h1>🔒 My Cloud</h1>
+      <p class="sub">Enter password to continue</p>
+      <input type="password" id="passwordInput" placeholder="Password" />
+      <button id="loginBtn">Login</button>
+      <p id="loginError" class="error"></p>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="appScreen" class="screen hidden">
+    <header>
+      <h1>☁️ My Cloud</h1>
+      <button id="logoutBtn">Logout</button>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Save new text</h2>
+        <input type="text" id="fileName" placeholder="File name e.g. notes.txt" />
+        <textarea id="fileContent" placeholder="Paste or write text here..." rows="8"></textarea>
+        <button id="saveBtn">Save to cloud</button>
+        <p id="saveMsg" class="success"></p>
+      </section>
+
+      <section class="card">
+        <h2>Your files</h2>
+        <ul id="fileList"></ul>
+      </section>
+    </main>
+  </div>
+
+  <!-- VIEW FILE MODAL -->
+  <div id="viewModal" class="modal hidden">
+    <div class="modal-content card">
+      <button id="closeModal" class="close-btn">×</button>
+      <h2 id="viewName"></h2>
+      <pre id="viewContent"></pre>
+      <button id="downloadBtn">Download</button>
+    </div>
+  </div>
+
+  <script src="public/script.js"></script>
 </body>
 </html>
