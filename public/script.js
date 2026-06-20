@@ -81,13 +81,6 @@ async function authFetch(url, options = {}) {
   return res;
 }
 
-fileContent.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    saveBtn.click();
-  }
-});
-
 saveBtn.addEventListener('click', async () => {
   saveMsg.textContent = '';
   const name = fileName.value.trim();
@@ -128,30 +121,30 @@ async function loadFiles() {
 function renderFiles(files) {
   fileList.innerHTML = '';
   if (files.length === 0) {
-    fileList.innerHTML = '<p class="text-center text-[#667781] text-sm mt-6">No files yet. Save one below 👇</p>';
+    fileList.innerHTML = '<p class="text-center text-slate-500 text-sm py-6">No files yet. Save one above.</p>';
     return;
   }
-  // reverse so oldest is on top, newest at bottom (like a chat thread)
-  [...files].reverse().forEach((file) => {
-    const time = new Date(file.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    const bubble = document.createElement('div');
-    bubble.className = 'self-end max-w-[80%] bg-[#005c4b] text-white rounded-lg rounded-tr-sm px-3 py-2 shadow';
-    bubble.innerHTML = `
-      <div class="flex items-center gap-2 mb-1">
-        <span class="text-sm">📄</span>
-        <span class="font-medium text-sm truncate">${escapeHtml(file.name)}</span>
+  files.forEach((file) => {
+    const date = new Date(file.createdAt).toLocaleString([], {
+      day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
+    });
+    const card = document.createElement('div');
+    card.className = 'flex items-center justify-between gap-3 bg-slate-800/60 border border-slate-800 rounded-xl px-4 py-3 hover:bg-slate-800 transition';
+    card.innerHTML = `
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-9 h-9 rounded-lg bg-slate-700 flex items-center justify-center text-sm shrink-0">📄</div>
+        <div class="min-w-0">
+          <p class="text-sm font-medium text-white truncate">${escapeHtml(file.name)}</p>
+          <p class="text-xs text-slate-500">${date}</p>
+        </div>
       </div>
-      <div class="flex items-center justify-between gap-3 mt-1">
-        <span class="text-[11px] text-[#8696a0]">${time}</span>
-        <span class="flex gap-2">
-          <button class="view-btn text-[11px] bg-[#0b141a]/30 hover:bg-[#0b141a]/50 px-2 py-1 rounded-md" data-id="${file._id}">View</button>
-          <button class="delete-btn text-[11px] bg-red-900/40 hover:bg-red-900/60 px-2 py-1 rounded-md" data-id="${file._id}">Delete</button>
-        </span>
+      <div class="flex items-center gap-2 shrink-0">
+        <button class="view-btn text-xs font-medium px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-100 transition" data-id="${file._id}">View</button>
+        <button class="delete-btn text-xs font-medium px-3 py-1.5 rounded-lg bg-rose-950 hover:bg-rose-900 text-rose-300 transition" data-id="${file._id}">Delete</button>
       </div>
     `;
-    fileList.appendChild(bubble);
+    fileList.appendChild(card);
   });
-  fileList.parentElement.scrollTop = fileList.parentElement.scrollHeight;
 }
 
 fileList.addEventListener('click', async (e) => {
