@@ -44,7 +44,7 @@ loginBtn.addEventListener('click', async () => {
     });
     const data = await res.json();
     if (!res.ok) {
-      loginError.textContent = data.error || 'Login failed';
+      loginError.textContent = '! ' + (data.error || 'LOGIN FAILED').toUpperCase();
       return;
     }
     token = data.token;
@@ -52,7 +52,7 @@ loginBtn.addEventListener('click', async () => {
     passwordInput.value = '';
     showApp();
   } catch (e) {
-    loginError.textContent = 'Could not reach server';
+    loginError.textContent = '! COULD NOT REACH SERVER';
   }
 });
 
@@ -86,8 +86,8 @@ saveBtn.addEventListener('click', async () => {
   const name = fileName.value.trim();
   const content = fileContent.value;
   if (!name || !content) {
-    saveMsg.textContent = 'Please enter a name and some text.';
-    saveMsg.style.color = '#f87171';
+    saveMsg.style.color = '#000';
+    saveMsg.textContent = '! NAME + TEXT REQUIRED';
     return;
   }
   try {
@@ -99,12 +99,12 @@ saveBtn.addEventListener('click', async () => {
     if (!res.ok) throw new Error('Save failed');
     fileName.value = '';
     fileContent.value = '';
-    saveMsg.style.color = '#4ade80';
-    saveMsg.textContent = 'Saved!';
+    saveMsg.style.color = '#000';
+    saveMsg.textContent = '✓ SAVED';
     loadFiles();
   } catch (e) {
-    saveMsg.style.color = '#f87171';
-    saveMsg.textContent = 'Error saving file.';
+    saveMsg.style.color = '#000';
+    saveMsg.textContent = '! ERROR SAVING FILE';
   }
 });
 
@@ -121,7 +121,7 @@ async function loadFiles() {
 function renderFiles(files) {
   fileList.innerHTML = '';
   if (files.length === 0) {
-    fileList.innerHTML = '<p class="text-center text-slate-500 text-sm py-6">No files yet. Save one above.</p>';
+    fileList.innerHTML = '<p class="text-center font-bold uppercase text-sm py-6 mono">No files yet. Save one above.</p>';
     return;
   }
   files.forEach((file) => {
@@ -129,18 +129,18 @@ function renderFiles(files) {
       day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
     });
     const card = document.createElement('div');
-    card.className = 'flex items-center justify-between gap-3 bg-slate-800/60 border border-slate-800 rounded-xl px-4 py-3 hover:bg-slate-800 transition';
+    card.className = 'flex items-center justify-between gap-3 bg-white border-2 border-black px-4 py-3 hover:bg-black hover:text-white transition group';
     card.innerHTML = `
       <div class="flex items-center gap-3 min-w-0">
-        <div class="w-9 h-9 rounded-lg bg-slate-700 flex items-center justify-center text-sm shrink-0">📄</div>
+        <div class="w-9 h-9 bg-black text-white flex items-center justify-center text-sm shrink-0 border-2 border-black group-hover:bg-white group-hover:text-black transition">▤</div>
         <div class="min-w-0">
-          <p class="text-sm font-medium text-white truncate">${escapeHtml(file.name)}</p>
-          <p class="text-xs text-slate-500">${date}</p>
+          <p class="text-sm font-black uppercase truncate">${escapeHtml(file.name)}</p>
+          <p class="text-xs mono opacity-70">${date}</p>
         </div>
       </div>
       <div class="flex items-center gap-2 shrink-0">
-        <button class="view-btn text-xs font-medium px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-100 transition" data-id="${file._id}">View</button>
-        <button class="delete-btn text-xs font-medium px-3 py-1.5 rounded-lg bg-rose-950 hover:bg-rose-900 text-rose-300 transition" data-id="${file._id}">Delete</button>
+        <button class="view-btn text-xs font-bold uppercase px-3 py-1.5 border-2 border-black bg-white text-black hover:bg-black hover:text-white transition" data-id="${file._id}">View</button>
+        <button class="delete-btn text-xs font-bold uppercase px-3 py-1.5 border-2 border-black bg-black text-white hover:bg-white hover:text-black transition" data-id="${file._id}">Delete</button>
       </div>
     `;
     fileList.appendChild(card);
