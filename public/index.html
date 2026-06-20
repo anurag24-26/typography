@@ -3,64 +3,104 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>My Cloud</title>
+<title>MY CLOUD</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-  ::-webkit-scrollbar { width: 8px; height: 8px; }
-  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 8px; }
-  ::-webkit-scrollbar-track { background: transparent; }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; }
+  .mono { font-family: 'Courier New', Courier, monospace; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: #000; border: 2px solid #fff; }
+  ::-webkit-scrollbar-track { background: #fff; }
+
+  .brutal-border { border: 3px solid #000; }
+  .brutal-shadow { box-shadow: 6px 6px 0 #000; }
+  .brutal-shadow-sm { box-shadow: 4px 4px 0 #000; }
+  .brutal-btn {
+    border: 3px solid #000;
+    box-shadow: 5px 5px 0 #000;
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+  .brutal-btn:active {
+    transform: translate(5px, 5px);
+    box-shadow: 0 0 0 #000;
+  }
+  .brutal-btn-sm {
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #000;
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+  .brutal-btn-sm:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 #000;
+  }
+  .brutal-input {
+    border: 3px solid #000;
+    background: #fff;
+  }
+  .brutal-input:focus {
+    outline: none;
+    box-shadow: 4px 4px 0 #000;
+  }
+  .stripe-bg {
+    background-image: repeating-linear-gradient(
+      45deg,
+      #000 0px,
+      #000 2px,
+      transparent 2px,
+      transparent 12px
+    );
+  }
 </style>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100">
+<body class="min-h-screen bg-white text-black">
 
   <!-- LOGIN SCREEN -->
-  <div id="loginScreen" class="screen min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl">
-      <div class="flex flex-col items-center mb-6">
-        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-2xl mb-4 shadow-lg shadow-indigo-500/20">
-          🔒
+  <div id="loginScreen" class="screen min-h-screen flex items-center justify-center p-4 bg-white">
+    <div class="w-full max-w-sm bg-white brutal-border brutal-shadow p-8">
+      <div class="flex flex-col items-start mb-6">
+        <div class="w-14 h-14 bg-black flex items-center justify-center text-2xl mb-4 brutal-border">
+          <span class="text-white">🔒</span>
         </div>
-        <h1 class="text-xl font-semibold text-white">Welcome back</h1>
-        <p class="text-slate-400 text-sm mt-1">Enter your password to access My Cloud</p>
+        <h1 class="text-3xl font-black uppercase tracking-tight">Locked Out</h1>
+        <p class="text-sm mt-1 mono uppercase tracking-wide">Enter password to continue</p>
       </div>
 
-      <label for="passwordInput" class="block text-xs font-medium text-slate-400 mb-1.5">Password</label>
+      <label for="passwordInput" class="block text-xs font-bold uppercase tracking-widest mb-1.5 mono">// Password</label>
       <input
         type="password"
         id="passwordInput"
         placeholder="••••••••"
-        class="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+        class="w-full brutal-input text-black placeholder-black/40 px-4 py-3 mb-4 text-base mono"
       />
 
       <button
         id="loginBtn"
-        class="w-full bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-medium py-3 rounded-xl transition shadow-lg shadow-indigo-600/20"
+        class="w-full bg-black text-white font-black uppercase tracking-wide py-3 brutal-btn"
       >
-        Login
+        Unlock →
       </button>
 
-      <p id="loginError" class="text-rose-400 text-sm mt-3 text-center min-h-[1.25rem]"></p>
+      <p id="loginError" class="text-black font-bold text-sm mt-3 mono min-h-[1.25rem]"></p>
     </div>
   </div>
 
   <!-- MAIN APP -->
-  <div id="appScreen" class="screen hidden min-h-screen flex flex-col">
+  <div id="appScreen" class="screen hidden min-h-screen flex flex-col bg-white">
 
     <!-- Header -->
-    <header class="sticky top-0 z-10 bg-slate-900/80 backdrop-blur border-b border-slate-800">
-      <div class="max-w-3xl mx-auto flex items-center justify-between px-4 py-3 sm:px-6">
+    <header class="sticky top-0 z-10 bg-white border-b-4 border-black">
+      <div class="max-w-3xl mx-auto flex items-center justify-between px-4 py-4 sm:px-6">
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-base shadow shadow-indigo-500/20">
-            ☁️
+          <div class="w-10 h-10 bg-black flex items-center justify-center text-base brutal-border">
+            <span class="text-white">☁</span>
           </div>
-          <h1 class="text-white font-semibold text-base sm:text-lg">My Cloud</h1>
+          <h1 class="font-black text-xl sm:text-2xl uppercase tracking-tight">My Cloud</h1>
         </div>
         <button
           id="logoutBtn"
-          class="text-slate-400 hover:text-white text-sm font-medium px-3 py-2 rounded-lg hover:bg-slate-800 transition"
+          class="bg-white text-black font-bold uppercase text-xs sm:text-sm px-4 py-2 brutal-btn-sm"
         >
-          Logout
+          Log Out
         </button>
       </div>
     </header>
@@ -68,64 +108,71 @@
     <main class="flex-1 w-full max-w-3xl mx-auto px-4 py-6 sm:px-6 flex flex-col gap-6">
 
       <!-- New file card -->
-      <section class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5">
-        <h2 class="text-sm font-semibold text-slate-200 mb-3 flex items-center gap-2">
-          <span class="text-indigo-400">＋</span> New text file
+      <section class="bg-white brutal-border brutal-shadow p-4 sm:p-5">
+        <h2 class="text-sm font-black uppercase tracking-widest mb-3 flex items-center gap-2">
+          <span class="bg-black text-white w-6 h-6 flex items-center justify-center text-base leading-none">+</span>
+          New Text File
         </h2>
 
+        <label class="block text-xs font-bold uppercase tracking-widest mb-1 mono">// File name</label>
         <input
           type="text"
           id="fileName"
-          placeholder="File name, e.g. notes.txt"
-          class="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 rounded-xl px-4 py-2.5 mb-3 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm"
+          placeholder="notes.txt"
+          class="w-full brutal-input text-black placeholder-black/40 px-4 py-2.5 mb-3 text-sm mono"
         />
 
+        <label class="block text-xs font-bold uppercase tracking-widest mb-1 mono">// Contents</label>
         <textarea
           id="fileContent"
           placeholder="Write or paste your text here..."
           rows="5"
-          class="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 rounded-xl px-4 py-3 outline-none resize-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition text-sm leading-relaxed"
+          class="w-full brutal-input text-black placeholder-black/40 px-4 py-3 resize-none text-sm leading-relaxed mono"
         ></textarea>
 
-        <div class="flex items-center justify-between mt-3 gap-3">
-          <p id="saveMsg" class="text-xs text-emerald-400 min-h-[1rem]"></p>
+        <div class="flex items-center justify-between mt-4 gap-3">
+          <p id="saveMsg" class="text-xs font-bold uppercase mono min-h-[1rem]"></p>
           <button
             id="saveBtn"
-            class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition shadow-lg shadow-indigo-600/20 shrink-0"
+            class="flex items-center gap-2 bg-black text-white text-sm font-black uppercase px-5 py-3 brutal-btn shrink-0"
           >
-            Save to cloud
+            Save to Cloud
           </button>
         </div>
       </section>
 
       <!-- File list -->
-      <section class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 flex-1">
-        <h2 class="text-sm font-semibold text-slate-200 mb-3">Your files</h2>
-        <div id="fileList" class="flex flex-col gap-2.5">
+      <section class="bg-white brutal-border brutal-shadow p-4 sm:p-5 flex-1">
+        <h2 class="text-sm font-black uppercase tracking-widest mb-3 border-b-2 border-black pb-2">Your Files</h2>
+        <div id="fileList" class="flex flex-col gap-3">
           <!-- files injected here -->
         </div>
       </section>
 
     </main>
+
+    <footer class="border-t-4 border-black py-3 text-center mono text-[10px] uppercase tracking-widest">
+      My Cloud — Local Storage
+    </footer>
   </div>
 
   <!-- VIEW FILE MODAL -->
-  <div id="viewModal" class="modal hidden fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg max-h-[85vh] flex flex-col shadow-2xl">
-      <div class="flex items-center justify-between px-5 py-4 border-b border-slate-800">
-        <h2 id="viewName" class="text-white font-medium truncate pr-8 text-sm sm:text-base"></h2>
+  <div id="viewModal" class="modal hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+    <div class="bg-white brutal-border brutal-shadow w-full max-w-lg max-h-[85vh] flex flex-col">
+      <div class="flex items-center justify-between px-5 py-4 border-b-3 border-black bg-black">
+        <h2 id="viewName" class="text-white font-black uppercase truncate pr-8 text-sm sm:text-base mono"></h2>
         <button
           id="closeModal"
-          class="text-slate-400 hover:text-white text-2xl leading-none w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-800 transition"
+          class="text-white text-2xl leading-none w-8 h-8 flex items-center justify-center border-2 border-white hover:bg-white hover:text-black transition"
         >
           ×
         </button>
       </div>
-      <pre id="viewContent" class="text-slate-200 text-sm whitespace-pre-wrap break-words px-5 py-4 overflow-y-auto flex-1"></pre>
-      <div class="px-5 py-4 border-t border-slate-800">
+      <pre id="viewContent" class="text-black text-sm whitespace-pre-wrap break-words px-5 py-4 overflow-y-auto flex-1 mono"></pre>
+      <div class="px-5 py-4 border-t-3 border-black">
         <button
           id="downloadBtn"
-          class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-xl transition shadow-lg shadow-indigo-600/20"
+          class="w-full bg-black text-white font-black uppercase py-3 brutal-btn"
         >
           Download
         </button>
